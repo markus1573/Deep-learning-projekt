@@ -45,7 +45,7 @@ class UNET(torch.nn.Module):
                 nn.ReLU()
             ),
             nn.Sequential(
-                nn.conv2d(channels[0]*2,channels[0],kernel_size=3,padding=1),  # (batchsize, 32, 28, 28)
+                nn.Conv2d(channels[0]*2,channels[0],kernel_size=3,padding=1),  # (batchsize, 32, 28, 28)
                 nn.ReLU(),
                 nn.Conv2d(channels[0],1,kernel_size=1) # (batchsize, 1, 28, 28)
             )      
