@@ -6,7 +6,7 @@ class UNET(torch.nn.Module):
     def __init__(self):
         super(UNET, self).__init__()
         channels = [32, 64, 128, 256]
-        self._convs = nn.ModuleList([
+        self.convs = nn.ModuleList([
             nn.Sequential(
                 nn.Conv2d(2, channels[0], kernel_size=3, padding=1),  # (batchsize, 32, 28, 28)
                 nn.ReLU()
@@ -28,7 +28,7 @@ class UNET(torch.nn.Module):
             )
         ])
 
-        self._tconvs = nn.ModuleList([
+        self.tconvs = nn.ModuleList([
             nn.Sequential(
                 nn.ConvTranspose2d(channels[3], channels[2], kernel_size=3, 
                                    stride=2, padding=1, output_padding=0),   # (batchsize, 128, 7, 7)
@@ -56,5 +56,15 @@ class UNET(torch.nn.Module):
         signal = x_trans
         signals = []
 
-        for i, conv in enumerate(self._convs):
-            
+        for i, conv in enumerate(self.convs):
+            signal = conv(x_trans)
+            if i < len(conv)-1:
+                signals.append(signal)
+        
+        for i, tconv in enumerate(self.tconvs):
+            if i == 0:
+                signal = tconv(signal)
+            else:
+                signal = torch.cat((signal, signals[-i]), dim=-3)
+                signal = tconv(signal)
+        return signal
