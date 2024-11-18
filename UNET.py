@@ -52,6 +52,8 @@ class UNET(torch.nn.Module):
         ])
 
     def forward(self, x, t):
+        print(f"x.shape: {x.shape}")
+        print(f"t.shape: {t.shape}")
         x_trans = torch.cat((x, t), dim=-3)
         signal = x_trans
         signals = []
