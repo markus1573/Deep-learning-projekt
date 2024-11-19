@@ -162,3 +162,5 @@ cython_debug/
 #.idea/
 
 mnist_data
+
+*.pth
