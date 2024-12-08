@@ -163,3 +163,4 @@ cython_debug/
 
 mnist_data
 CIFAR_data
+CIFAR_data2
