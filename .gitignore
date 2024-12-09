@@ -164,3 +164,7 @@ cython_debug/
 mnist_data
 CIFAR_data
 CIFAR_data2
+test_images
+train_images
+valid_images
+gen_images
